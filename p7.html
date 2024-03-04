@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="userApp">
+
+<head>
+    <title>AngularJS CRUD Application for Users</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js">
+    </script>
+</head>
+
+<body ng-controller="UserController">
+    <h1>User Management </h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="user1 in users">
+            <td>{{user1.name}}</td>
+            <td>{{user1.email}}</td>
+            <td>
+                <button ng-click="editUser(user1)">Edit</button>
+                <button ng-click="deleteUser(user1)">Delete</button>
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <h2>Create User</h2>
+    <input type="text" ng-model="newUser.name" placeholder="Name" />
+    <input type="text" ng-model="newUser.email" placeholder="Email" />
+    <button ng-click="createUser()">Create</button>
+    <hr>
+    <h2>Edit User</h2>
+    <input type="text" ng-model="editedUser.name" placeholder="Name" />
+    <input type="text" ng-model="editedUser.email" placeholder="Email" />
+    <button ng-click="updateUser()">Update</button>
+    <script>
+        var app = angular.module('userApp', []);
+        app.controller('UserController', function ($scope) {
+            $scope.users = [
+                { name: 'Suma K', email: 'sumak@example.com' },
+                { name: 'Ratan Kumar', email: 'ratankumar@example.com' }
+            ];
+            $scope.newUser = {};
+            $scope.createUser = function () {
+                $scope.users.push($scope.newUser);
+                $scope.newUser = {};
+            };
+            $scope.editUser = function (user) {
+                $scope.editedUser = user;
+            };
+            $scope.updateUser = function () {
+                $scope.editedUser = {};
+            };
+            $scope.deleteUser = function (user) {
+                $scope.users.splice($scope.users.indexOf(user), 1);
+            };
+        });
+    </script>
+</body>
+
+</html>
